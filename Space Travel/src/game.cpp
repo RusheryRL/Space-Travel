@@ -5,6 +5,8 @@
 #include "consts.h"
 #include "screens.h"
 
+#include "gameplay.h"
+
 namespace run
 {
 	void game()
@@ -24,7 +26,7 @@ namespace run
 				break;
 			case GAMEPLAY:
 				
-				
+				run::gameplay(currentScreen);
 				
 				break;
 			case EXIT:

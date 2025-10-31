@@ -31,6 +31,9 @@
     <ClCompile Include="src\game.cpp">
       <Filter>game</Filter>
     </ClCompile>
+    <ClCompile Include="src\gameplay.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game.h">
@@ -39,6 +42,11 @@
     <ClInclude Include="src\consts.h">
       <Filter>settings</Filter>
     </ClInclude>
-    <ClInclude Include="src\screens.h" />
+    <ClInclude Include="src\screens.h">
+      <Filter>settings</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameplay.h">
+      <Filter>screens .h</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
