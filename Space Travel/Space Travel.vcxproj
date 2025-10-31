@@ -114,10 +114,11 @@
       <AdditionalIncludeDirectories>$(SolutionDir)libs\raylib-5.5_win32_msvc16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)libs\raylib-5.5_win32_msvc16\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>raylib.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -148,10 +149,11 @@
       <AdditionalIncludeDirectories>$(SolutionDir)libs\raylib-5.5_win64_msvc16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)libs\raylib-5.5_win64_msvc16\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>raylib.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

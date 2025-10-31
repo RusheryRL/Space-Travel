@@ -20,23 +20,39 @@ namespace basicFunctionsGameplay
 
 		if (player.isActive)
 		{
-			playerFunctions::move(player, deltaTime);
-			playerFunctions::rotate(player, deltaTime);
-
-			if (obstacles.size() > 0)
+			if (!player.hasLose)
 			{
-				for (int i = 0; i < obstacles.size(); i++)
+				playerFunctions::move(player, deltaTime);
+				playerFunctions::rotate(player, deltaTime);
+
+				if (obstacles.size() > 0)
 				{
-					obstacleFunctions::move(obstacles.at(i), deltaTime);
+					for (int i = 0; i < obstacles.size(); i++)
+					{
+						obstacleFunctions::move(obstacles.at(i), deltaTime);
 
-					gameplayFunctions::despawnObstacle(obstacles, i);
+						gameplayFunctions::despawnObstacle(obstacles, i);
+					}
 				}
+
+				gameplayFunctions::spawnObstacle(obstacles, deltaTime);
+
+				if (gameplayFunctions::checkPlayerObstacleCollition(obstacles, player))
+					player.hasLose = true;
+
+				if (IsKeyPressed(KEY_ESCAPE))
+					currentScreen = EXIT;
 			}
+			else
+				if (IsKeyPressed(KEY_ENTER))
+				{
+					player.isActive = false;
+					player.hasLose = false;
 
-			gameplayFunctions::spawnObstacle(obstacles, deltaTime);
+					playerFunctions::setDefault(player);
 
-			if (IsKeyPressed(KEY_ESCAPE))
-				currentScreen = EXIT;
+					gameplayFunctions::despawnAllObstacles(obstacles);
+				}
 		}
 		else
 		{
@@ -48,6 +64,7 @@ namespace basicFunctionsGameplay
 	void draw(object::Player player, std::vector <object::Obstacle> obstacles)
 	{
 		int startingTextLenght = MeasureText("Presione ENTER para iniciar", 40);
+		int loseTextLenght = MeasureText("Has perdido, presione ENTER para reiniciar", 40);
 
 		BeginDrawing();
 
@@ -60,6 +77,11 @@ namespace basicFunctionsGameplay
 
 		if (!player.isActive)
 			DrawText("Presione ENTER para iniciar", (screen::width / 2) - (startingTextLenght / 2), screen::height / 2, 40, BLUE);
+
+		if (player.hasLose)
+			DrawText("Has perdido, presione ENTER para reiniciar", (screen::width / 2) - (loseTextLenght / 2), screen::height / 2, 40, BLUE);
+
+		DrawText("Version 0.1", 10, screen::height - 30, 20, RED);
 
 		EndDrawing();
 	}
@@ -87,5 +109,32 @@ namespace gameplayFunctions
 	{
 		if (!obstacles.at(index).isActive)
 			obstacles.erase(obstacles.begin() + index);
+	}
+
+	void despawnAllObstacles(std::vector<object::Obstacle>& obstacles)
+	{
+		for (int i = 0; i < obstacles.size();)
+			if (obstacles.size() > 0)
+				obstacles.erase(obstacles.begin());
+	}
+
+	bool checkPlayerObstacleCollition(std::vector<object::Obstacle>& obstacles, object::Player& player)
+	{
+		for (int i = 0; i < obstacles.size(); i++)
+		{
+			if (player.hitbox.x + player.hitbox.width >= obstacles.at(i).hitbox1.x &&
+				player.hitbox.x <= obstacles.at(i).hitbox1.x + obstacles.at(i).hitbox1.width &&
+				player.hitbox.y + player.hitbox.height >= obstacles.at(i).hitbox1.y &&
+				player.hitbox.y <= obstacles.at(i).hitbox1.y + obstacles.at(i).hitbox1.height)
+				return true;
+
+			if (player.hitbox.x + player.hitbox.width >= obstacles.at(i).hitbox2.x &&
+				player.hitbox.x <= obstacles.at(i).hitbox2.x + obstacles.at(i).hitbox2.width &&
+				player.hitbox.y + player.hitbox.height >= obstacles.at(i).hitbox2.y &&
+				player.hitbox.y <= obstacles.at(i).hitbox2.y + obstacles.at(i).hitbox2.height)
+				return true;
+		}
+
+		return false;
 	}
 }

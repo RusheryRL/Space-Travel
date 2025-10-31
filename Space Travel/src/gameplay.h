@@ -22,4 +22,7 @@ namespace gameplayFunctions
 {
 	void spawnObstacle(std::vector <object::Obstacle>& obstacles, float deltaTime);
 	void despawnObstacle(std::vector <object::Obstacle>& obstacles, int index);
+	void despawnAllObstacles(std::vector <object::Obstacle>& obstacles);
+	
+	bool checkPlayerObstacleCollition(std::vector <object::Obstacle>& obstacles, object::Player& player);
 }

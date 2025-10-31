@@ -15,6 +15,7 @@ namespace object
 		float rotation = 0.0f;
 
 		bool isActive = false;
+		bool hasLose = false;
 	};
 }
 

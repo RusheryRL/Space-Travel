@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="main">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="game">
       <UniqueIdentifier>{daadffe8-ec3a-4e19-83ea-9479d00e45cb}</UniqueIdentifier>
     </Filter>
@@ -25,21 +21,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp">
-      <Filter>main</Filter>
+    <ClCompile Include="src\gameplay.cpp">
+      <Filter>screens .cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\obstacle.cpp">
+      <Filter>objects .cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\player.cpp">
+      <Filter>objects .cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\game.cpp">
       <Filter>game</Filter>
     </ClCompile>
-    <ClCompile Include="src\gameplay.cpp">
-      <Filter>screens .cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="src\player.cpp">
-      <Filter>main</Filter>
-    </ClCompile>
-    <ClCompile Include="src\obstacle.cpp">
-      <Filter>main</Filter>
-    </ClCompile>
+    <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game.h">
@@ -54,7 +48,11 @@
     <ClInclude Include="src\gameplay.h">
       <Filter>screens .h</Filter>
     </ClInclude>
-    <ClInclude Include="src\player.h" />
-    <ClInclude Include="src\obstacle.h" />
+    <ClInclude Include="src\obstacle.h">
+      <Filter>objects .h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\player.h">
+      <Filter>objects .h</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
