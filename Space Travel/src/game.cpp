@@ -22,6 +22,8 @@ namespace run
 
 		bool shouldClose = false;
 
+		int creditsLenght = MeasureText("Creado por Zomblack3 (Santiago Britos)", 30);
+		int returnLenght = MeasureText("Presione ENTER para volver", 30);
 
 		SCREENS currentScreen = MAIN_MENU;
 
@@ -45,7 +47,11 @@ namespace run
 				break;
 			case CREDITS:
 
+				DrawText("Creado por Zomblack3 (Santiago Britos)", (screen::width / 2) - (creditsLenght / 2), screen::height / 2, 30, WHITE);
+				DrawText("Presione ENTER para volver", (screen::width / 2) - (returnLenght / 2), screen::height / 2 + 100, 30, WHITE);
 
+				if (IsKeyPressed(KEY_ENTER))
+					currentScreen = MAIN_MENU;
 
 				break;
 			case EXIT:				
