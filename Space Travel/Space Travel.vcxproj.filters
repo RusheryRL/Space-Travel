@@ -1,17 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Archivos de origen">
+    <Filter Include="main">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Archivos de encabezado">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="game">
+      <UniqueIdentifier>{daadffe8-ec3a-4e19-83ea-9479d00e45cb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de recursos">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="objects .h">
+      <UniqueIdentifier>{60134f20-94bb-499c-ad8f-c74d7ee8babe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="objects .cpp">
+      <UniqueIdentifier>{07ccdb5b-fd73-41c5-9bc4-7dad7763c8c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="screens .h">
+      <UniqueIdentifier>{23746b6c-f1fb-4f77-8403-47f188709e68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="screens .cpp">
+      <UniqueIdentifier>{3d043a9c-1479-4067-ae13-97fe2256055b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="settings">
+      <UniqueIdentifier>{3bd0c68f-360c-4be2-bb7f-4091495ae54e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\game.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\consts.h">
+      <Filter>settings</Filter>
+    </ClInclude>
+    <ClInclude Include="src\screens.h" />
   </ItemGroup>
 </Project>
