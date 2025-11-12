@@ -36,5 +36,6 @@ namespace basicFunctionsMM
 		DrawText("Presione S para iniciar", (screen::width / 2) - (gameplayInstrutionLenght / 2), screen::height / 2, texts::basicSize, WHITE);
 		DrawText("Presione C para ver los creditos", (screen::width / 2) - (creditsInstrutionLenght / 2), screen::height / 2 + texts::spaceBetweenY, texts::basicSize, WHITE);
 		DrawText("Presione E para salir", (screen::width / 2) - (exitInstrutionLenght / 2), (screen::height / 2) + (texts::spaceBetweenY * 2), texts::basicSize, WHITE);
+		DrawText("Version 0.3", 10, screen::height - 30, 20, RED);
 	}
 }

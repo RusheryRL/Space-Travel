@@ -20,6 +20,10 @@ namespace run
 
 		playerFunctions::setDefault(player);
 
+		Texture2D background = LoadTexture("res/textures/gameplay/background_layer_1.png");
+		Texture2D midground = LoadTexture("res/textures/gameplay/background_layer_2.png");
+		Texture2D foreground = LoadTexture("res/textures/gameplay/background_layer_3.png");
+
 		bool shouldClose = false;
 
 		int creditsLenght = MeasureText("Creado por Zomblack3 (Santiago Britos)", texts::basicSize);
@@ -42,7 +46,7 @@ namespace run
 				break;
 			case GAMEPLAY:
 				
-				run::gameplay(currentScreen, player, obstacles);
+				run::gameplay(currentScreen, player, obstacles, background, midground, foreground);
 				
 				break;
 			case CREDITS:
@@ -62,8 +66,6 @@ namespace run
 			default:
 				break;
 			}
-
-			DrawText("Version 0.2", 10, screen::height - 30, 20, RED);
 
 			EndDrawing();
 
