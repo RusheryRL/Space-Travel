@@ -25,6 +25,7 @@ namespace playerFunctions
 {
 	void setDefault(object::Player& player);
 	void move(object::Player& player, float deltaTime);
+	void moveP2(object::Player& player, float deltaTime);
 	void rotate(object::Player& player, float deltaTime);
 	void draw(object::Player& player);
 }

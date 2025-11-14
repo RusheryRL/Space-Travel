@@ -15,7 +15,7 @@ namespace run
 namespace basicFunctionsGameplay
 {
 	void update(SCREENS& currentScreen, object::Player& player, object::Player& player2, std::vector <object::Obstacle>& obstacles);
-	void draw(object::Player player, object::Player player2, std::vector <object::Obstacle> obstacles, Texture2D back, Texture2D mid, Texture2D front);
+	void draw(SCREENS& currentScreen, object::Player player, object::Player player2, std::vector <object::Obstacle> obstacles, Texture2D back, Texture2D mid, Texture2D front);
 }
 
 namespace gameplayFunctions

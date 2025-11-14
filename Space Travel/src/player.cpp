@@ -46,13 +46,47 @@ namespace playerFunctions
 			player.jumpingTimer -= deltaTime;
 		}
 
-		if (IsKeyPressed(KEY_SPACE))
+		if (IsKeyPressed(KEY_W))
 		{
 			fallSpeed = jumpStrenght;
 
 			player.isJumping = true;
 			player.jumpingTimer = baseJumpingTime;
 			
+			player.rotation = jumpRotation;
+		}
+
+		if (player.jumpingTimer < 0)
+			player.isJumping = false;
+	}
+
+	void moveP2(object::Player& player, float deltaTime)
+	{
+		const float jumpRotation = 30.0f;
+		const float baseJumpingTime = 0.5f;
+
+		float gravity = 500.0f;
+		float jumpStrenght = -150.0f;
+		float fallSpeed = jumpStrenght;
+
+		if (!player.isJumping)
+		{
+			fallSpeed += gravity * deltaTime;
+			player.hitbox.y -= fallSpeed * deltaTime;
+		}
+		else
+		{
+			player.hitbox.y -= (jumpStrenght * -1.0f) * deltaTime;
+			player.jumpingTimer -= deltaTime;
+		}
+
+		if (IsKeyPressed(KEY_UP))
+		{
+			fallSpeed = jumpStrenght;
+
+			player.isJumping = true;
+			player.jumpingTimer = baseJumpingTime;
+
 			player.rotation = jumpRotation;
 		}
 
