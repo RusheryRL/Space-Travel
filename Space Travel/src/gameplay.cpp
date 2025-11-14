@@ -4,17 +4,17 @@
 
 namespace run
 {
-	void gameplay(SCREENS& currentScreen, object::Player& player, std::vector <object::Obstacle>& obstacles, Texture2D background, Texture2D midground, Texture2D foreground)
+	void gameplay(SCREENS& currentScreen, object::Player& player, object::Player& player2, std::vector <object::Obstacle>& obstacles, Texture2D background, Texture2D midground, Texture2D foreground)
 	{
-		basicFunctionsGameplay::update(currentScreen, player, obstacles);
+		basicFunctionsGameplay::update(currentScreen, player, player2, obstacles);
 
-		basicFunctionsGameplay::draw(player, obstacles, background, midground, foreground);
+		basicFunctionsGameplay::draw(player, player2, obstacles, background, midground, foreground);
 	}
 }
 
 namespace basicFunctionsGameplay
 {
-	void update(SCREENS& currentScreen, object::Player& player, std::vector <object::Obstacle>& obstacles)
+	void update(SCREENS& currentScreen, object::Player& player, object::Player& player2, std::vector <object::Obstacle>& obstacles)
 	{
 		float deltaTime = GetFrameTime();
 
@@ -68,6 +68,58 @@ namespace basicFunctionsGameplay
 				}
 			}
 		}
+		if (currentScreen == GAMEPLAYCOOP)
+		{
+			if (player2.isActive)
+			{
+				if (!player2.hasLose)
+				{
+					playerFunctions::move(player2, deltaTime);
+					playerFunctions::rotate(player2, deltaTime);
+
+					if (obstacles.size() > 0)
+					{
+						for (unsigned int i = 0; i < obstacles.size(); i++)
+						{
+							obstacleFunctions::move(obstacles.at(i), deltaTime);
+						}
+					}
+
+					if (gameplayFunctions::checkPlayerObstacleCollition(obstacles, player2) || player2.hitbox.y + (player2.hitbox.height / 2) > screen::height)
+						player2.hasLose = true;
+
+					if (IsKeyPressed(KEY_ESCAPE))
+						currentScreen = EXIT;
+				}
+				else
+				{
+					if (IsKeyPressed(KEY_ENTER))
+					{
+						player2.isActive = false;
+						player2.hasLose = false;
+
+						playerFunctions::setDefault(player2);
+					}
+
+					if (IsKeyPressed(KEY_S))
+					{
+						player2.isActive = false;
+						player2.hasLose = false;
+
+						playerFunctions::setDefault(player2);
+
+						gameplayFunctions::despawnAllObstacles(obstacles);
+
+						currentScreen = MAIN_MENU;
+					}
+				}
+			}
+			else
+			{
+				if (IsKeyPressed(KEY_ENTER))
+					player2.isActive = true;
+			}
+		}
 		else
 		{
 			if (IsKeyPressed(KEY_ENTER))
@@ -75,7 +127,7 @@ namespace basicFunctionsGameplay
 		}
 	}
 
-	void draw(object::Player player, std::vector <object::Obstacle> obstacles, Texture2D back, Texture2D mid, Texture2D front)
+	void draw(object::Player player, object::Player player2, std::vector <object::Obstacle> obstacles, Texture2D back, Texture2D mid, Texture2D front)
 	{
 		int startingTextLenght = MeasureText("Presione ENTER para iniciar", texts::mediumSize);
 		int resetTextLenght = MeasureText("Has perdido, presione ENTER para reiniciar", texts::mediumSize);
@@ -86,6 +138,9 @@ namespace basicFunctionsGameplay
 		backgroundGameplay::drawForeground(front);
 
 		playerFunctions::draw(player);
+
+		if (player2.isActive)
+			playerFunctions::draw(player2);
 
 		for (unsigned int i = 0; i < obstacles.size(); i++)
 			obstacleFunctions::draw(obstacles.at(i));
@@ -194,7 +249,7 @@ void backgroundGameplay::drawBackground(Texture2D back)
 	float deltaTime = GetFrameTime();
 
 	DrawTextureEx(back, { updateBackgorund(back, deltaTime), parallax::backY }, 0.0f, parallax::backgroundScale, WHITE);
-	DrawTextureEx(back, { back.width*2.0f + updateBackgorund(back, deltaTime), parallax::backY }, 0.0f, parallax::backgroundScale, WHITE);
+	DrawTextureEx(back, { back.width * 2.0f + updateBackgorund(back, deltaTime), parallax::backY }, 0.0f, parallax::backgroundScale, WHITE);
 }
 
 void backgroundGameplay::drawMidground(Texture2D mid)

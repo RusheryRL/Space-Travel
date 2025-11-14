@@ -9,13 +9,13 @@
 
 namespace run
 {
-	void gameplay(SCREENS& currentScreen, object::Player& player, std::vector <object::Obstacle>& obstacles, Texture2D background, Texture2D midground, Texture2D foreground);
+	void gameplay(SCREENS& currentScreen, object::Player& player, object::Player& player2, std::vector <object::Obstacle>& obstacles, Texture2D background, Texture2D midground, Texture2D foreground);
 }
 
 namespace basicFunctionsGameplay
 {
-	void update(SCREENS& currentScreen, object::Player& player, std::vector <object::Obstacle>& obstacles);
-	void draw(object::Player player, std::vector <object::Obstacle> obstacles, Texture2D back, Texture2D mid, Texture2D front);
+	void update(SCREENS& currentScreen, object::Player& player, object::Player& player2, std::vector <object::Obstacle>& obstacles);
+	void draw(object::Player player, object::Player player2, std::vector <object::Obstacle> obstacles, Texture2D back, Texture2D mid, Texture2D front);
 }
 
 namespace gameplayFunctions

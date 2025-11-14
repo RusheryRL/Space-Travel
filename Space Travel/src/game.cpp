@@ -15,10 +15,12 @@ namespace run
 		InitWindow(screen::width, screen::height, "SPACE TRAVEL");
 
 		object::Player player;
+		object::Player player2;
 
 		std::vector <object::Obstacle> obstacles = { };
 
 		playerFunctions::setDefault(player);
+		playerFunctions::setDefault(player2);
 
 		Texture2D background = LoadTexture("res/textures/gameplay/background_layer_1.png");
 		Texture2D midground = LoadTexture("res/textures/gameplay/background_layer_2.png");
@@ -46,8 +48,13 @@ namespace run
 				break;
 			case GAMEPLAY:
 				
-				run::gameplay(currentScreen, player, obstacles, background, midground, foreground);
+				run::gameplay(currentScreen, player, player2, obstacles, background, midground, foreground);
 				
+				break;
+			case GAMEPLAYCOOP:
+
+				run::gameplay(currentScreen, player, player2, obstacles, background, midground, foreground);
+
 				break;
 			case CREDITS:
 
