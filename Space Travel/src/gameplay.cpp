@@ -4,7 +4,7 @@
 
 namespace run
 {
-	void gameplay(SCREENS& currentScreen, object::Player& player, object::Player& player2, std::vector <object::Obstacle>& obstacles, Texture2D background, Texture2D midground, Texture2D foreground)
+	void gameplay(SCREENS& currentScreen, object::Player& player, object::Player& player2, std::vector <object::Obstacle>& obstacles, Texture2D& background, Texture2D& midground, Texture2D& foreground)
 	{
 		basicFunctionsGameplay::update(currentScreen, player, player2, obstacles);
 
@@ -22,6 +22,8 @@ namespace basicFunctionsGameplay
 		{
 			playerFunctions::move(player, deltaTime);
 			playerFunctions::rotate(player, deltaTime);
+
+			gameplayFunctions::checkPlayerScreenCollition(player);
 
 			if (obstacles.size() > 0)
 			{
@@ -58,6 +60,9 @@ namespace basicFunctionsGameplay
 			{
 				playerFunctions::moveP2(player2, deltaTime);
 				playerFunctions::rotate(player2, deltaTime);
+
+				gameplayFunctions::checkPlayerScreenCollition(player2);
+
 				if (gameplayFunctions::checkPlayerObstacleCollition(obstacles, player2) || player2.hitbox.y + (player2.hitbox.height / 2) > screen::height)
 					player.hasLose = true;
 			}
@@ -125,15 +130,16 @@ namespace basicFunctionsGameplay
 		}
 	}
 
-	void draw(SCREENS& currentScreen, object::Player player, object::Player player2, std::vector <object::Obstacle> obstacles, Texture2D back, Texture2D mid, Texture2D front)
+	void draw(SCREENS& currentScreen, object::Player player, object::Player player2, std::vector <object::Obstacle> obstacles, Texture2D& back, Texture2D& mid, Texture2D& front)
 	{
 		int startingTextLenght = MeasureText("Presione ENTER para iniciar", texts::mediumSize);
 		int resetTextLenght = MeasureText("Has perdido, presione ENTER para reiniciar", texts::mediumSize);
 		int returnTextLenght = MeasureText("o presiona S para salir", texts::mediumSize);
+		float deltaTime = GetFrameTime();
 
-		backgroundGameplay::drawBackground(back);
-		backgroundGameplay::drawMidground(mid);
-		backgroundGameplay::drawForeground(front);
+		backgroundGameplay::drawBackground(back, deltaTime);
+		backgroundGameplay::drawMidground(mid, deltaTime);
+		backgroundGameplay::drawForeground(front, deltaTime);
 
 		playerFunctions::draw(player);
 
@@ -204,13 +210,18 @@ namespace gameplayFunctions
 
 		return false;
 	}
+	void checkPlayerScreenCollition(object::Player& player)
+	{
+		if (player.hitbox.y <= 0.0f)
+			player.hitbox.y = 0.0f;
+	}
 }
 
-float backgroundGameplay::updateBackgorund(Texture2D back, float& deltaTime)
+float backgroundGameplay::updateBackgorund(Texture2D& back, float& deltaTime)
 {
 	float scrollingBack = 0.0f;
 
-	scrollingBack -= 1.0f * deltaTime;
+	scrollingBack -= 10.0f * deltaTime;
 
 	if (scrollingBack <= -back.width * 2)
 		scrollingBack = 0;
@@ -218,11 +229,11 @@ float backgroundGameplay::updateBackgorund(Texture2D back, float& deltaTime)
 	return scrollingBack;
 }
 
-float backgroundGameplay::updateMidgorund(Texture2D mid, float& deltaTime)
+float backgroundGameplay::updateMidgorund(Texture2D& mid, float& deltaTime)
 {
 	float scrollingMid = 0.0f;
 
-	scrollingMid -= 5.0f * deltaTime;
+	scrollingMid -= 50.0f * deltaTime;
 
 	if (scrollingMid <= -mid.width * 2)
 		scrollingMid = 0;
@@ -230,11 +241,11 @@ float backgroundGameplay::updateMidgorund(Texture2D mid, float& deltaTime)
 	return scrollingMid;
 }
 
-float backgroundGameplay::updateForegorund(Texture2D front, float& deltaTime)
+float backgroundGameplay::updateForegorund(Texture2D& front, float& deltaTime)
 {
 	float scrollingFront = 0.0f;
 
-	scrollingFront -= 10.0f * deltaTime;
+	scrollingFront -= 100.0f * deltaTime;
 
 	if (scrollingFront <= -front.width * 2)
 		scrollingFront = 0;
@@ -242,26 +253,20 @@ float backgroundGameplay::updateForegorund(Texture2D front, float& deltaTime)
 	return scrollingFront;
 }
 
-void backgroundGameplay::drawBackground(Texture2D back)
+void backgroundGameplay::drawBackground(Texture2D& back, float& deltaTime)
 {
-	float deltaTime = GetFrameTime();
-
 	DrawTextureEx(back, { updateBackgorund(back, deltaTime), parallax::backY }, 0.0f, parallax::backgroundScale, WHITE);
 	DrawTextureEx(back, { back.width * 2.0f + updateBackgorund(back, deltaTime), parallax::backY }, 0.0f, parallax::backgroundScale, WHITE);
 }
 
-void backgroundGameplay::drawMidground(Texture2D mid)
+void backgroundGameplay::drawMidground(Texture2D& mid, float& deltaTime)
 {
-	float deltaTime = GetFrameTime();
-
 	DrawTextureEx(mid, { updateMidgorund(mid, deltaTime), parallax::midY }, 0.0f, parallax::backgroundScale, WHITE);
 	DrawTextureEx(mid, { mid.width * 2.0f + updateMidgorund(mid, deltaTime), parallax::midY }, 0.0f, parallax::backgroundScale, WHITE);
 }
 
-void backgroundGameplay::drawForeground(Texture2D front)
+void backgroundGameplay::drawForeground(Texture2D& front, float& deltaTime)
 {
-	float deltaTime = GetFrameTime();
-
 	DrawTextureEx(front, { updateForegorund(front, deltaTime), parallax::frontY }, 0.0f, parallax::backgroundScale, WHITE);
 	DrawTextureEx(front, { front.width * 2.0f + updateForegorund(front, deltaTime), parallax::frontY }, 0.0f, parallax::backgroundScale, WHITE);
 }

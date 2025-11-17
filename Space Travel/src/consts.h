@@ -20,3 +20,8 @@ namespace parallax
 	const float frontY = 70.0f;
 	const float backgroundScale = 2.0f;
 }
+
+namespace points
+{
+	const int pointsPerSecond = 1;
+}

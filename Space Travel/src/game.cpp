@@ -47,9 +47,9 @@ namespace run
 
 				break;
 			case GAMEPLAY:
-				
+
 				run::gameplay(currentScreen, player, player2, obstacles, background, midground, foreground);
-				
+
 				break;
 			case GAMEPLAYCOOP:
 
@@ -65,10 +65,10 @@ namespace run
 					currentScreen = MAIN_MENU;
 
 				break;
-			case EXIT:				
-				
+			case EXIT:
+
 				shouldClose = true;
-				
+
 				break;
 			default:
 				break;
@@ -77,7 +77,12 @@ namespace run
 			EndDrawing();
 
 			if (shouldClose)
+			{
+				UnloadTexture(background);
+				UnloadTexture(midground);
+				UnloadTexture(foreground);
 				CloseWindow();
+			}
 		}
 	}
 }
