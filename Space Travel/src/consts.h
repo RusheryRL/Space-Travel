@@ -23,5 +23,5 @@ namespace parallax
 
 namespace points
 {
-	const int pointsPerSecond = 1;
+	const int timerPoint = 1;
 }

@@ -23,6 +23,7 @@ namespace basicFunctionsGameplay
 			playerFunctions::move(player, deltaTime);
 			playerFunctions::rotate(player, deltaTime);
 
+			gameplayFunctions::gainPointsPlayer(player);
 			gameplayFunctions::checkPlayerScreenCollition(player);
 
 			if (obstacles.size() > 0)
@@ -61,6 +62,7 @@ namespace basicFunctionsGameplay
 				playerFunctions::moveP2(player2, deltaTime);
 				playerFunctions::rotate(player2, deltaTime);
 
+				gameplayFunctions::gainPointsPlayer(player2);
 				gameplayFunctions::checkPlayerScreenCollition(player2);
 
 				if (gameplayFunctions::checkPlayerObstacleCollition(obstacles, player2) || player2.hitbox.y + (player2.hitbox.height / 2) > screen::height)
@@ -130,11 +132,12 @@ namespace basicFunctionsGameplay
 		}
 	}
 
-	void draw(SCREENS& currentScreen, object::Player player, object::Player player2, std::vector <object::Obstacle> obstacles, Texture2D& back, Texture2D& mid, Texture2D& front)
+	void draw(SCREENS currentScreen, object::Player player, object::Player player2, std::vector <object::Obstacle> obstacles, Texture2D back, Texture2D mid, Texture2D front)
 	{
 		int startingTextLenght = MeasureText("Presione ENTER para iniciar", texts::mediumSize);
 		int resetTextLenght = MeasureText("Has perdido, presione ENTER para reiniciar", texts::mediumSize);
 		int returnTextLenght = MeasureText("o presiona S para salir", texts::mediumSize);
+		int playerPointsLenght = MeasureText("Puntos Player: ", texts::mediumSize);
 		float deltaTime = GetFrameTime();
 
 		backgroundGameplay::drawBackground(back, deltaTime);
@@ -142,12 +145,19 @@ namespace basicFunctionsGameplay
 		backgroundGameplay::drawForeground(front, deltaTime);
 
 		playerFunctions::draw(player);
+		gameplayFunctions::drawPlayerPoints(player);
 
 		if (currentScreen == GAMEPLAYCOOP)
 			playerFunctions::draw(player2);
 
 		for (unsigned int i = 0; i < obstacles.size(); i++)
 			obstacleFunctions::draw(obstacles.at(i));
+
+		gameplayFunctions::drawPlayerPoints(player);
+
+		if (currentScreen == GAMEPLAYCOOP)
+			gameplayFunctions::drawPlayer2Points(player2, playerPointsLenght);
+
 		if (!player.isActive)
 			DrawText("Presione ENTER para iniciar", (screen::width / 2) - (startingTextLenght / 2), screen::height / 2, texts::mediumSize, BLUE);
 
@@ -214,6 +224,27 @@ namespace gameplayFunctions
 	{
 		if (player.hitbox.y <= 0.0f)
 			player.hitbox.y = 0.0f;
+	}
+	void gainPointsPlayer(object::Player& player)
+	{
+		float timer = 0.0f;
+
+		timer += 1;
+
+		if (player.isActive && timer == 100.0f)
+		{
+			player.points++;
+			timer = 0.0f;
+		}
+	}
+	void drawPlayerPoints(object::Player player)
+	{
+		DrawText(TextFormat("Puntos Player: %i", player.points), 0, texts::basicSize, texts::basicSize, BLUE);
+	}
+	void drawPlayer2Points(object::Player player2, int textLenght)
+	{
+		DrawText(TextFormat("Puntos Player2: %i", player2.points), textLenght, texts::basicSize, texts::basicSize, RED);
+
 	}
 }
 

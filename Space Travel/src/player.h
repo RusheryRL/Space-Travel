@@ -18,6 +18,8 @@ namespace object
 		bool isActive = false;
 		bool isJumping = false;
 		bool hasLose = false;
+
+		int points = 0;
 	};
 }
 
