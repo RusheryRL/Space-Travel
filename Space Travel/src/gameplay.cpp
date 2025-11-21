@@ -4,26 +4,26 @@
 
 namespace run
 {
-	void gameplay(SCREENS& currentScreen, object::Player& player, object::Player& player2, std::vector <object::Obstacle>& obstacles, Texture2D& background, Texture2D& midground, Texture2D& foreground)
+	void gameplay(SCREENS& currentScreen, object::Player& player, object::Player& player2, std::vector <object::Obstacle>& obstacles, Texture2D& background, Texture2D& midground, Texture2D& foreground, Texture2D& playerTextureIdle, Texture2D& playerTextureInput, Texture2D obstacleTexture, Sound playerIdleSFX, Sound playerJumpSFX, Sound playerCrashSFX, Sound playerPointSFX)
 	{
-		basicFunctionsGameplay::update(currentScreen, player, player2, obstacles);
+		basicFunctionsGameplay::update(currentScreen, player, player2, obstacles, playerTextureIdle, playerTextureInput, playerIdleSFX, playerJumpSFX, playerCrashSFX, playerPointSFX);
 
-		basicFunctionsGameplay::draw(currentScreen, player, player2, obstacles, background, midground, foreground);
+		basicFunctionsGameplay::draw(currentScreen, player, player2, obstacles, background, midground, foreground, obstacleTexture);
 	}
 }
 
 namespace basicFunctionsGameplay
 {
-	void update(SCREENS& currentScreen, object::Player& player, object::Player& player2, std::vector <object::Obstacle>& obstacles)
+	void update(SCREENS& currentScreen, object::Player& player, object::Player& player2, std::vector <object::Obstacle>& obstacles, Texture2D& playerTextureIdle, Texture2D& playerTextureInput, Sound playerIdleSFX, Sound playerJumpSFX, Sound playerCrashSFX, Sound playerPointSFX)
 	{
 		float deltaTime = GetFrameTime();
 
 		if (player.isActive && !player.hasLose)
 		{
-			playerFunctions::move(player, deltaTime);
+			playerFunctions::move(player, deltaTime, playerTextureInput, playerTextureIdle, playerJumpSFX, playerIdleSFX);
 			playerFunctions::rotate(player, deltaTime);
 
-			gameplayFunctions::gainPointsPlayer(player);
+			gameplayFunctions::gainPointsPlayer(player, playerPointSFX);
 			gameplayFunctions::checkPlayerScreenCollition(player);
 
 			if (obstacles.size() > 0)
@@ -39,7 +39,10 @@ namespace basicFunctionsGameplay
 			gameplayFunctions::spawnObstacle(obstacles, deltaTime);
 
 			if (gameplayFunctions::checkPlayerObstacleCollition(obstacles, player) || player.hitbox.y + (player.hitbox.height / 2) > screen::height)
+			{
+				PlaySound(playerCrashSFX);
 				player.hasLose = true;
+			}
 
 			if (IsKeyPressed(KEY_ESCAPE))
 				currentScreen = EXIT;
@@ -51,7 +54,10 @@ namespace basicFunctionsGameplay
 				player.isActive = true;
 
 				if (currentScreen == GAMEPLAYCOOP)
+				{
 					player2.isActive = true;
+					player2.color = RED;
+				}
 			}
 		}
 
@@ -59,14 +65,19 @@ namespace basicFunctionsGameplay
 		{
 			if (player2.isActive && !player2.hasLose && !player.hasLose)
 			{
-				playerFunctions::moveP2(player2, deltaTime);
+				player2.color = RED;
+
+				playerFunctions::moveP2(player2, deltaTime, playerTextureInput, playerTextureIdle, playerJumpSFX, playerIdleSFX);
 				playerFunctions::rotate(player2, deltaTime);
 
-				gameplayFunctions::gainPointsPlayer(player2);
+				gameplayFunctions::gainPointsPlayer(player2, playerPointSFX);
 				gameplayFunctions::checkPlayerScreenCollition(player2);
 
 				if (gameplayFunctions::checkPlayerObstacleCollition(obstacles, player2) || player2.hitbox.y + (player2.hitbox.height / 2) > screen::height)
+				{
+					PlaySound(playerCrashSFX);
 					player.hasLose = true;
+				}
 			}
 		}
 
@@ -81,8 +92,8 @@ namespace basicFunctionsGameplay
 					player2.isActive = false;
 					player2.hasLose = false;
 
-					playerFunctions::setDefault(player);
-					playerFunctions::setDefault(player2);
+					playerFunctions::setDefault(player, playerTextureIdle);
+					playerFunctions::setDefault(player2, playerTextureIdle);
 
 					gameplayFunctions::despawnAllObstacles(obstacles);
 				}
@@ -94,8 +105,8 @@ namespace basicFunctionsGameplay
 					player.hasLose = false;
 					player2.hasLose = false;
 
-					playerFunctions::setDefault(player);
-					playerFunctions::setDefault(player2);
+					playerFunctions::setDefault(player, playerTextureIdle);
+					playerFunctions::setDefault(player2, playerTextureIdle);
 
 					gameplayFunctions::despawnAllObstacles(obstacles);
 
@@ -112,7 +123,7 @@ namespace basicFunctionsGameplay
 					player.isActive = false;
 					player.hasLose = false;
 
-					playerFunctions::setDefault(player);
+					playerFunctions::setDefault(player, playerTextureIdle);
 
 					gameplayFunctions::despawnAllObstacles(obstacles);
 				}
@@ -122,7 +133,7 @@ namespace basicFunctionsGameplay
 					player.isActive = false;
 					player.hasLose = false;
 
-					playerFunctions::setDefault(player);
+					playerFunctions::setDefault(player2, playerTextureIdle);
 
 					gameplayFunctions::despawnAllObstacles(obstacles);
 
@@ -132,12 +143,13 @@ namespace basicFunctionsGameplay
 		}
 	}
 
-	void draw(SCREENS currentScreen, object::Player player, object::Player player2, std::vector <object::Obstacle> obstacles, Texture2D back, Texture2D mid, Texture2D front)
+	void draw(SCREENS currentScreen, object::Player player, object::Player player2, std::vector <object::Obstacle> obstacles, Texture2D back, Texture2D mid, Texture2D front, Texture2D obstacleTexture)
 	{
 		int startingTextLenght = MeasureText("Presione ENTER para iniciar", texts::mediumSize);
 		int resetTextLenght = MeasureText("Has perdido, presione ENTER para reiniciar", texts::mediumSize);
 		int returnTextLenght = MeasureText("o presiona S para salir", texts::mediumSize);
 		int playerPointsLenght = MeasureText("Puntos Player: ", texts::mediumSize);
+		int player2HowToPlayLenght = MeasureText("Press UP Button to Jump!", texts::mediumSize);
 		float deltaTime = GetFrameTime();
 
 		backgroundGameplay::drawBackground(back, deltaTime);
@@ -151,7 +163,7 @@ namespace basicFunctionsGameplay
 			playerFunctions::draw(player2);
 
 		for (unsigned int i = 0; i < obstacles.size(); i++)
-			obstacleFunctions::draw(obstacles.at(i));
+			obstacleFunctions::draw(obstacles.at(i), obstacleTexture);
 
 		gameplayFunctions::drawPlayerPoints(player);
 
@@ -159,7 +171,13 @@ namespace basicFunctionsGameplay
 			gameplayFunctions::drawPlayer2Points(player2, playerPointsLenght);
 
 		if (!player.isActive)
+		{
 			DrawText("Presione ENTER para iniciar", (screen::width / 2) - (startingTextLenght / 2), screen::height / 2, texts::mediumSize, BLUE);
+			DrawText("Press W to Jump!", 0, screen::height - texts::mediumSize, texts::mediumSize, BLUE);
+
+			if (currentScreen == GAMEPLAYCOOP)
+				DrawText("Press UP to Jump!", screen::width - player2HowToPlayLenght , screen::height - texts::mediumSize, texts::mediumSize, RED);
+		}
 
 		if (player.hasLose)
 		{
@@ -225,7 +243,7 @@ namespace gameplayFunctions
 		if (player.hitbox.y <= 0.0f)
 			player.hitbox.y = 0.0f;
 	}
-	void gainPointsPlayer(object::Player& player)
+	void gainPointsPlayer(object::Player& player, Sound pointSFX)
 	{
 		float timer = 0.0f;
 
@@ -233,6 +251,7 @@ namespace gameplayFunctions
 
 		if (player.isActive && timer == 100.0f)
 		{
+			PlaySound(pointSFX);
 			player.points++;
 			timer = 0.0f;
 		}

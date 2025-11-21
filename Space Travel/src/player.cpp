@@ -4,7 +4,7 @@
 
 namespace playerFunctions
 {
-	void setDefault(object::Player& player)
+	void setDefault(object::Player& player, Texture2D idlePlayer)
 	{
 		const float startingPosX = 50.0f;
 		const float startingWidth = 35.0f;
@@ -24,9 +24,11 @@ namespace playerFunctions
 		player.color = WHITE;
 
 		player.isActive = false;
+
+		player.currentTexture = idlePlayer;
 	}
 
-	void move(object::Player& player, float deltaTime)
+	void move(object::Player& player, float deltaTime, Texture2D textureInput, Texture2D textureIdle, Sound playerJump, Sound playerIdle)
 	{
 		const float jumpRotation = 30.0f;
 		const float baseJumpingTime = 0.5f;
@@ -37,8 +39,12 @@ namespace playerFunctions
 
 		if (!player.isJumping)
 		{
+			PlaySound(playerIdle);
+
 			fallSpeed += gravity * deltaTime;
 			player.hitbox.y -= fallSpeed * deltaTime;
+
+			player.currentTexture = textureIdle;
 		}
 		else
 		{
@@ -48,7 +54,11 @@ namespace playerFunctions
 
 		if (IsKeyPressed(KEY_W))
 		{
+			PlaySound(playerJump);
+
 			fallSpeed = jumpStrenght;
+
+			player.currentTexture = textureInput;
 
 			player.isJumping = true;
 			player.jumpingTimer = baseJumpingTime;
@@ -60,7 +70,7 @@ namespace playerFunctions
 			player.isJumping = false;
 	}
 
-	void moveP2(object::Player& player, float deltaTime)
+	void moveP2(object::Player& player, float deltaTime, Texture2D textureInput, Texture2D textureIdle, Sound playerJump, Sound playerIdle)
 	{
 		const float jumpRotation = 30.0f;
 		const float baseJumpingTime = 0.5f;
@@ -71,8 +81,12 @@ namespace playerFunctions
 
 		if (!player.isJumping)
 		{
+			PlaySound(playerIdle);
+
 			fallSpeed += gravity * deltaTime;
 			player.hitbox.y -= fallSpeed * deltaTime;
+
+			player.currentTexture = textureIdle;
 		}
 		else
 		{
@@ -82,7 +96,11 @@ namespace playerFunctions
 
 		if (IsKeyPressed(KEY_UP))
 		{
+			PlaySound(playerJump);
+
 			fallSpeed = jumpStrenght;
+
+			player.currentTexture = textureInput;
 
 			player.isJumping = true;
 			player.jumpingTimer = baseJumpingTime;
@@ -105,6 +123,9 @@ namespace playerFunctions
 
 	void draw(object::Player& player)
 	{
-		DrawRectanglePro(player.hitbox, player.origin, player.rotation, player.color);
+		Rectangle shipRec = {0,0,35,35};
+		Rectangle shipRecDest = {player.hitbox.x,player.hitbox.y,35,35};
+
+		DrawTexturePro(player.currentTexture, shipRec, shipRecDest, player.origin, player.rotation, player.color);
 	}
 }
