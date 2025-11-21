@@ -7,6 +7,7 @@
 
 #include "mainMenu.h"
 #include "gameplay.h"
+#include "button.h"
 
 namespace run
 {
@@ -42,8 +43,17 @@ namespace run
 
 		int devSectionLenght = MeasureText("Developers:", texts::basicSize);
 		int returnLenght = MeasureText("Presione ENTER para volver", texts::basicSize);
+		int gameplayInstrutionLenght = MeasureText("Play Singeplayer", texts::basicSize);
+		int gameplay2sInstrutionLenght = MeasureText("Play multiplayer", texts::basicSize);
+		int creditsInstrutionLenght = MeasureText("Credits", texts::basicSize);
+		int exitInstrutionLenght = MeasureText("Exit", texts::basicSize);
 
 		SCREENS currentScreen = MAIN_MENU;
+
+		button::Button singleplayerButton = buttonFunctions::initButton(gameplayInstrutionLenght, (screen::width / 2) - static_cast<float>((gameplayInstrutionLenght / 2)), screen::height / 2);
+		button::Button multiplayerButton = buttonFunctions::initButton(gameplay2sInstrutionLenght, (screen::width / 2) - static_cast<float>((gameplay2sInstrutionLenght / 2)), (screen::height / 2) + (texts::spaceBetweenY * 2));
+		button::Button creditsButton = buttonFunctions::initButton(creditsInstrutionLenght, (screen::width / 2) - static_cast<float>((creditsInstrutionLenght / 2)), screen::height / 2 + texts::spaceBetweenY);
+		button::Button exitButton = buttonFunctions::initButton(exitInstrutionLenght, (screen::width / 2) - static_cast<float>((exitInstrutionLenght / 2)), (screen::height / 2) + (texts::spaceBetweenY * 3));
 
 		while (!WindowShouldClose())
 		{
@@ -56,7 +66,7 @@ namespace run
 			{
 			case MAIN_MENU:
 
-				run::mainMenu(currentScreen, spaceTravelLogo, spaceTravelMMBackground, menuMusic, pressButton);
+				run::mainMenu(currentScreen, spaceTravelLogo, spaceTravelMMBackground, menuMusic, pressButton, singleplayerButton, multiplayerButton, creditsButton, exitButton);
 
 				break;
 			case GAMEPLAY:

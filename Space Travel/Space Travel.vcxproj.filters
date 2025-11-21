@@ -37,6 +37,9 @@
     <ClCompile Include="src\mainMenu.cpp">
       <Filter>screens .cpp</Filter>
     </ClCompile>
+    <ClCompile Include="src\button.cpp">
+      <Filter>objects .cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game.h">
@@ -59,6 +62,9 @@
     </ClInclude>
     <ClInclude Include="src\mainMenu.h">
       <Filter>screens .h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\button.h">
+      <Filter>objects .h</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
