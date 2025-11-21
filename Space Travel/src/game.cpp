@@ -16,16 +16,14 @@ namespace run
 		InitWindow(screen::width, screen::height, "SPACE TRAVEL");
 		InitAudioDevice();
 
-		Texture2D background = LoadTexture("res/textures/gameplay/background_layer_1.png");
-		Texture2D midground = LoadTexture("res/textures/gameplay/background_layer_2.png");
+		Texture2D background = LoadTexture("res/textures/gameplay/background_layer_2.png");
+		Texture2D midground = LoadTexture("res/textures/gameplay/background_layer_1.png");
 		Texture2D foreground = LoadTexture("res/textures/gameplay/background_layer_3.png");
 		Texture2D spaceTravelLogo = LoadTexture("res/textures/menu/SpaceTravelLogoMenu.png");
 		Texture2D spaceTravelMMBackground = LoadTexture("res/textures/menu/MMlogo.png");
 		Texture2D playerTextureInput = LoadTexture("res/textures/gameplay/playerTexture.png");
 		Texture2D playerTextureIdle = LoadTexture("res/textures/gameplay/playerTextureNoInput.png");
 		Texture2D obstacleTexture = LoadTexture("res/textures/gameplay/obstacleTexture.png");
-
-		InitAudioDevice();
 
 		Sound playerJump = LoadSound("res/sound/SFX/cartoon-jump.mp3");
 		Sound playerIdle = LoadSound("res/sound/SFX/ufo_floating.mp3");
@@ -57,10 +55,10 @@ namespace run
 
 		SCREENS currentScreen = MAIN_MENU;
 
-		button::Button singleplayerButton = buttonFunctions::initButton(gameplayInstrutionLenght, (screen::width / 2) - static_cast<float>((gameplayInstrutionLenght / 2)), screen::height / 2);
-		button::Button multiplayerButton = buttonFunctions::initButton(gameplay2sInstrutionLenght, (screen::width / 2) - static_cast<float>((gameplay2sInstrutionLenght / 2)), (screen::height / 2) + (texts::spaceBetweenY * 2));
-		button::Button creditsButton = buttonFunctions::initButton(creditsInstrutionLenght, (screen::width / 2) - static_cast<float>((creditsInstrutionLenght / 2)), screen::height / 2 + texts::spaceBetweenY);
-		button::Button exitButton = buttonFunctions::initButton(exitInstrutionLenght, (screen::width / 2) - static_cast<float>((exitInstrutionLenght / 2)), (screen::height / 2) + (texts::spaceBetweenY * 3));
+		button::Button singleplayerButton = buttonFunctions::initButton(gameplayInstrutionLenght, (screen::width / Diff::Diffx2) - static_cast<float>((gameplayInstrutionLenght / Diff::Diffx2)), screen::height / Diff::Diffx2);
+		button::Button multiplayerButton = buttonFunctions::initButton(gameplay2sInstrutionLenght, (screen::width / Diff::Diffx2) - static_cast<float>((gameplay2sInstrutionLenght / Diff::Diffx2)), screen::height / Diff::Diffx2 + texts::spaceBetweenY);
+		button::Button creditsButton = buttonFunctions::initButton(creditsInstrutionLenght, (screen::width / Diff::Diffx2) - (static_cast<float>(creditsInstrutionLenght / Diff::Diffx2)), (screen::height / Diff::Diffx2) + (texts::spaceBetweenY * Diff::Diffx2));
+		button::Button exitButton = buttonFunctions::initButton(exitInstrutionLenght, (screen::width / Diff::Diffx2) - static_cast<float>((exitInstrutionLenght / Diff::Diffx2)), (screen::height / Diff::Diffx2) + (texts::spaceBetweenY * Diff::Diffx3));
 
 		while (!WindowShouldClose())
 		{
@@ -88,21 +86,21 @@ namespace run
 			case CREDITS:
 				UpdateMusicStream(creditsMusic);
 
-				DrawText("Developers: ", devSectionLenght / 2, 0, texts::basicSize, WHITE);
-				DrawText("Zomblack3 (Santiago Britos)", 0, texts::basicSize, texts::basicSize, WHITE);
-				DrawText("Rushery (Juan Pablo Pivetta)", 0, texts::basicSize * 2, texts::basicSize, WHITE);
-				DrawText("Art: ", 0, texts::basicSize * 4, texts::basicSize, WHITE);
-				DrawText("Rushery (Juan Pablo Pivetta)", 0, texts::basicSize * 5 + texts::basicSize, texts::basicSize, WHITE);
-				DrawText("Oriklo - Reddit Forum - Midground Parallax", 0, texts::basicSize * 6 + texts::basicSize * 2, texts::basicSize, WHITE);
-				DrawText("Sound: ", 0, (screen::width / 3) - texts::basicSize, texts::basicSize, WHITE);
-				DrawText("freesound_community - Pixabay - PlayerJump", 0, (screen::width / 3) - texts::basicSize / 3, texts::basicSize, WHITE);
-				DrawText("freesound_community - Pixabay - buttonSelected", 0, (screen::width / 3) + texts::basicSize, texts::basicSize, WHITE);
-				DrawText("freesound_community - Pixabay - Player SFX basic sound", 0, (screen::width / 3) + texts::basicSize * 2, texts::basicSize, WHITE);
-				DrawText("DRAGON-STUDIO - Pixabay - Player Crash", 0, (screen::width / 3) + texts::basicSize * 3, texts::basicSize, WHITE);
-				DrawText("lucadialessandro - Pixabay - Player pass obstacle", 0, (screen::width / 3) + texts::basicSize * 4, texts::basicSize, WHITE);
-				DrawText("Music: ", 0, (screen::width / 2) + texts::basicSize, texts::basicSize, WHITE);
-				DrawText("freesound_community - Pixabay - main theme", 0, (screen::width / 2) + texts::basicSize * 2, texts::basicSize, WHITE);
-				DrawText("freesound_community - Pixabay - credits theme", 0, (screen::width / 2) + texts::basicSize * 3, texts::basicSize, WHITE);
+				DrawText("Developers: ", devSectionLenght / Diff::Diffx2, Diff::originDiff, texts::basicSize, WHITE);
+				DrawText("Zomblack3 (Santiago Britos)", Diff::originDiff, texts::basicSize, texts::basicSize, WHITE);
+				DrawText("Rushery (Juan Pablo Pivetta)", Diff::originDiff, texts::basicSize * Diff::Diffx2, texts::basicSize, WHITE);
+				DrawText("Art: ", 0, texts::basicSize * Diff::Diffx4, texts::basicSize, WHITE);
+				DrawText("Rushery (Juan Pablo Pivetta)", Diff::originDiff, texts::basicSize * Diff::Diffx5 + texts::basicSize, texts::basicSize, WHITE);
+				DrawText("Oriklo - Reddit Forum - Midground Parallax", Diff::originDiff, texts::basicSize * Diff::Diffx6 + texts::basicSize * Diff::Diffx2, texts::basicSize, WHITE);
+				DrawText("Sound: ", 0, (screen::width / Diff::Diffx3) - texts::basicSize, texts::basicSize, WHITE);
+				DrawText("freesound_community - Pixabay - PlayerJump", Diff::originDiff, (screen::width / Diff::Diffx3) - texts::basicSize / Diff::Diffx3, texts::basicSize, WHITE);
+				DrawText("freesound_community - Pixabay - buttonSelected", Diff::originDiff, (screen::width / Diff::Diffx3) + texts::basicSize, texts::basicSize, WHITE);
+				DrawText("freesound_community - Pixabay - Player SFX basic sound", Diff::originDiff, (screen::width / Diff::Diffx3) + texts::basicSize * Diff::Diffx2, texts::basicSize, WHITE);
+				DrawText("DRAGON-STUDIO - Pixabay - Player Crash", Diff::originDiff, (screen::width / Diff::Diffx3) + texts::basicSize * Diff::Diffx3, texts::basicSize, WHITE);
+				DrawText("lucadialessandro - Pixabay - Player pass obstacle", Diff::originDiff, (screen::width / Diff::Diffx3) + texts::basicSize * Diff::Diffx4, texts::basicSize, WHITE);
+				DrawText("Music: ", Diff::originDiff, (screen::width / Diff::Diffx2) + texts::basicSize, texts::basicSize, WHITE);
+				DrawText("freesound_community - Pixabay - main theme", Diff::originDiff, (screen::width / Diff::Diffx2) + texts::basicSize * Diff::Diffx2, texts::basicSize, WHITE);
+				DrawText("freesound_community - Pixabay - credits theme", Diff::originDiff, (screen::width / Diff::Diffx2) + texts::basicSize * Diff::Diffx3, texts::basicSize, WHITE);
 				DrawText("Presione ENTER para volver", screen::width - returnLenght, screen::height - texts::basicSize, texts::basicSize, WHITE);
 
 				if (IsKeyPressed(KEY_ENTER))

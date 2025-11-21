@@ -24,7 +24,7 @@ namespace gameplayFunctions
 	void despawnObstacle(std::vector <object::Obstacle>& obstacles, int index);
 	void despawnAllObstacles(std::vector <object::Obstacle>& obstacles);
 	void checkPlayerScreenCollition(object::Player& player);
-	void gainPointsPlayer(object::Player& player, Sound pointSFX);
+	void gainPointsPlayer(object::Player& player, Sound pointSFX, std::vector <object::Obstacle> obstacles);
 	void drawPlayerPoints(object::Player player);
 	void drawPlayer2Points(object::Player player2, int textLenght);
 
@@ -33,9 +33,9 @@ namespace gameplayFunctions
 
 namespace backgroundGameplay
 {
-	float updateBackgorund(Texture2D& back, float& deltaTime);
-	float updateMidgorund(Texture2D& mid, float& deltaTime);
-	float updateForegorund(Texture2D& front, float& deltaTime);
+	//float updateBackgorund(Texture2D& back, float& deltaTime);
+	//float updateMidgorund(Texture2D& mid, float& deltaTime);
+	//float updateForegorund(Texture2D& front, float& deltaTime);
 
 	void drawBackground(Texture2D& back, float& deltaTime);
 	void drawMidground(Texture2D& mid, float& deltaTime);

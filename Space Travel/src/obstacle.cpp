@@ -50,9 +50,7 @@ namespace obstacleFunctions
 
 	void draw(object::Obstacle obstacle, Texture2D obstacleTexture)
 	{
-		//DrawRectangle(static_cast <int> (obstacle.hitbox1.x), static_cast <int> (obstacle.hitbox1.y), static_cast <int> (obstacle.hitbox1.width), static_cast <int> (obstacle.hitbox1.height), obstacle.color);
 		DrawTextureRec(obstacleTexture, obstacle.hitbox1, { obstacle.hitbox1.x , obstacle.hitbox1.y}, obstacle.color);
-		//DrawRectangle(static_cast <int> (obstacle.hitbox2.x), static_cast <int> (obstacle.hitbox2.y), static_cast <int> (obstacle.hitbox2.width), static_cast <int> (obstacle.hitbox2.height), obstacle.color);
 		DrawTextureRec(obstacleTexture, obstacle.hitbox2, { obstacle.hitbox2.x , obstacle.hitbox2.y }, obstacle.color);
 	}
 }

@@ -21,7 +21,17 @@ namespace parallax
 	const float backgroundScale = 2.0f;
 }
 
-namespace points
+namespace Diff
 {
-	const int timerPoint = 1;
+	const int originDiff = 0;
+	const int Diffx2 = 2;
+	const int Diffx3 = 3;
+	const int Diffx4 = 4;
+	const int Diffx5 = 5;
+	const int Diffx6 = 6;
+}
+
+namespace textVersion
+{
+	const int versionX = 10;
 }

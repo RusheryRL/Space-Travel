@@ -53,12 +53,12 @@ namespace basicFunctionsMM
 
 	void draw(Texture2D logo, Texture2D background, button::Button singleplayerButton, button::Button multiplayerButton, button::Button creditsButton, button::Button exitButton)
 	{
-		DrawTexture(background, 0,0, WHITE);
-		DrawTexture(logo, screen::width / 3, 0, WHITE);
-		DrawText("Play Singeplayer", (screen::width / 2) - (static_cast<int>(singleplayerButton.hitbox.width / 2)), screen::height / 2, texts::basicSize, singleplayerButton.color);
-		DrawText("Credits", (screen::width / 2) - (static_cast<int>(creditsButton.hitbox.width / 2)), screen::height / 2 + texts::spaceBetweenY, texts::basicSize, creditsButton.color);
-		DrawText("Exit", (screen::width / 2) - (static_cast<int>(exitButton.hitbox.width / 2)), (screen::height / 2) + (texts::spaceBetweenY * 3), texts::basicSize, exitButton.color);
-		DrawText("Play multiplayer", (screen::width / 2) - (static_cast<int>(multiplayerButton.hitbox.width / 2)), (screen::height / 2) + (texts::spaceBetweenY * 2), texts::basicSize, multiplayerButton.color);
-		DrawText("Version 1.0", 10, screen::height - 30, 20, RED);
+		DrawTexture(background, Diff::originDiff, Diff::originDiff, WHITE);
+		DrawTexture(logo, screen::width / Diff::Diffx3, Diff::originDiff, WHITE);
+		DrawText("Play Singeplayer", (screen::width / Diff::Diffx2) - (static_cast<int>(singleplayerButton.hitbox.width / Diff::Diffx2)), screen::height / Diff::Diffx2, texts::basicSize, singleplayerButton.color);
+		DrawText("Credits", (screen::width / Diff::Diffx2) - (static_cast<int>(creditsButton.hitbox.width / Diff::Diffx2)), (screen::height / Diff::Diffx2) + (texts::spaceBetweenY * 2), texts::basicSize, creditsButton.color);
+		DrawText("Exit", (screen::width / Diff::Diffx2) - (static_cast<int>(exitButton.hitbox.width / Diff::Diffx2)), (screen::height / Diff::Diffx2) + (texts::spaceBetweenY * Diff::Diffx3), texts::basicSize, exitButton.color);
+		DrawText("Play multiplayer",(screen::width / Diff::Diffx2) - static_cast<int>(multiplayerButton.hitbox.width / Diff::Diffx2), (screen::height / 2) + texts::spaceBetweenY, texts::basicSize, multiplayerButton.color);
+		DrawText("Version 1.0", textVersion::versionX, screen::height - texts::basicSize, texts::basicSize, RED);
 	}
 }

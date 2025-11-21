@@ -15,6 +15,7 @@ namespace object
 		float speed = 0.0f;
 
 		bool isActive = true;
+		bool passed = false;
 	};
 }
 
