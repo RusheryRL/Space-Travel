@@ -6,7 +6,7 @@
 
 namespace run
 {
-	void mainMenu(SCREENS& currentScreen, Texture2D logo, Texture2D background, Sound music, Sound buttonSFX, button::Button singleplayerButton, button::Button multiplayerButton, button::Button creditsButton, button::Button exitButton)
+	void mainMenu(SCREENS& currentScreen, Texture2D logo, Texture2D background, Music music, Sound buttonSFX, button::Button singleplayerButton, button::Button multiplayerButton, button::Button creditsButton, button::Button exitButton)
 	{
 		basicFunctionsMM::update(currentScreen, music, buttonSFX, singleplayerButton, multiplayerButton, creditsButton, exitButton);
 		basicFunctionsMM::draw(logo, background, singleplayerButton, multiplayerButton, creditsButton, exitButton);
@@ -15,9 +15,9 @@ namespace run
 
 namespace basicFunctionsMM
 {
-	void update(SCREENS& currentScreen, Sound music, Sound buttonSFX, button::Button singleplayerButton, button::Button multiplayerButton, button::Button creditsButton, button::Button exitButton)
+	void update(SCREENS& currentScreen, Music music, Sound buttonSFX, button::Button singleplayerButton, button::Button multiplayerButton, button::Button creditsButton, button::Button exitButton)
 	{
-		PlaySound(music);
+		UpdateMusicStream(music);
 
 		Vector2 mouse = {};
 

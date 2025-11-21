@@ -85,6 +85,7 @@ namespace basicFunctionsGameplay
 		{
 			if (player.hasLose || player2.hasLose)
 			{
+
 				if (IsKeyPressed(KEY_ENTER))
 				{
 					player.isActive = false;
@@ -109,6 +110,8 @@ namespace basicFunctionsGameplay
 					playerFunctions::setDefault(player2, playerTextureIdle);
 
 					gameplayFunctions::despawnAllObstacles(obstacles);
+
+					StopSound(playerCrashSFX);
 
 					currentScreen = MAIN_MENU;
 				}
@@ -136,6 +139,8 @@ namespace basicFunctionsGameplay
 					playerFunctions::setDefault(player2, playerTextureIdle);
 
 					gameplayFunctions::despawnAllObstacles(obstacles);
+
+					StopSound(playerCrashSFX);
 
 					currentScreen = MAIN_MENU;
 				}

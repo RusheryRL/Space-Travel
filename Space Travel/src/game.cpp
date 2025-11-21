@@ -14,6 +14,7 @@ namespace run
 	void game()
 	{
 		InitWindow(screen::width, screen::height, "SPACE TRAVEL");
+		InitAudioDevice();
 
 		Texture2D background = LoadTexture("res/textures/gameplay/background_layer_1.png");
 		Texture2D midground = LoadTexture("res/textures/gameplay/background_layer_2.png");
@@ -23,18 +24,24 @@ namespace run
 		Texture2D playerTextureInput = LoadTexture("res/textures/gameplay/playerTexture.png");
 		Texture2D playerTextureIdle = LoadTexture("res/textures/gameplay/playerTextureNoInput.png");
 		Texture2D obstacleTexture = LoadTexture("res/textures/gameplay/obstacleTexture.png");
+
+		InitAudioDevice();
+
 		Sound playerJump = LoadSound("res/sound/SFX/cartoon-jump.mp3");
 		Sound playerIdle = LoadSound("res/sound/SFX/ufo_floating.mp3");
 		Sound playerLoose = LoadSound("res/sound/SFX/car-crash-sound.mp3");
 		Sound playerPoint = LoadSound("res/sound/SFX/point.mp3");
 		Sound pressButton = LoadSound("res/sound/SFX/button-pressed.mp3");
-		Sound menuMusic = LoadSound("res/sound/music/main_theme.mp3");
-		Sound creditsMusic = LoadSound("res/sound/music/space-simple-credits.mp3");
+		Music menuMusic = LoadMusicStream("res/sound/music/main_theme.mp3");
+		Music creditsMusic = LoadMusicStream("res/sound/music/space-simple-credits.mp3");
+
+		PlayMusicStream(menuMusic);
+		PlayMusicStream(creditsMusic);
 
 		object::Player player;
 		object::Player player2;
 
-		std::vector <object::Obstacle> obstacles = { };
+		std::vector <object::Obstacle> obstacles = {};
 
 		playerFunctions::setDefault(player, playerTextureIdle);
 		playerFunctions::setDefault(player2, playerTextureIdle);
@@ -58,7 +65,6 @@ namespace run
 		while (!WindowShouldClose())
 		{
 			BeginDrawing();
-			//InitAudioDevice();
 
 			ClearBackground(BLACK);
 
@@ -80,6 +86,8 @@ namespace run
 
 				break;
 			case CREDITS:
+				UpdateMusicStream(creditsMusic);
+
 				DrawText("Developers: ", devSectionLenght / 2, 0, texts::basicSize, WHITE);
 				DrawText("Zomblack3 (Santiago Britos)", 0, texts::basicSize, texts::basicSize, WHITE);
 				DrawText("Rushery (Juan Pablo Pivetta)", 0, texts::basicSize * 2, texts::basicSize, WHITE);
@@ -126,8 +134,13 @@ namespace run
 				UnloadTexture(obstacleTexture);
 				UnloadTexture(spaceTravelMMBackground);
 				UnloadSound(playerJump);
-				//UnloadSound();
-				//CloseAudioDevice();
+				UnloadSound(playerIdle);
+				UnloadSound(playerLoose);
+				UnloadSound(playerPoint);
+				UnloadSound(pressButton);
+				UnloadMusicStream(menuMusic);
+				UnloadMusicStream(creditsMusic);
+				CloseAudioDevice();
 				CloseWindow();
 			}
 		}
